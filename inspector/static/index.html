@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"/><title>Checksum Inspector</title>
+<style>body{font-family:system-ui;background:#101820;color:#e8eef5;margin:2rem}
+.card{background:#1c2834;padding:1rem;border-radius:8px;margin:0.5rem;display:inline-block}</style>
+</head><body><h1>Checksum 校验台</h1><button onclick="refresh()">刷新</button><div id="stats"></div>
+<script>async function refresh(){const s=await fetch('/api/stats').then(r=>r.json());
+document.getElementById('stats').innerHTML=Object.entries(s).map(([k,v])=>'<div class="card">'+k+': '+v+'</div>').join('');}
+refresh();</script></body></html>
