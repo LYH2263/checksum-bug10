@@ -130,8 +130,11 @@ func (p *Pipeline) CloseFlushCount() int {
 	if p.closed {
 		return 0
 	}
-	_ = p.builder.FlushPending()
+	// Capture the pending count BEFORE flushing: FlushPending zeroes the
+	// counter, so reading it afterwards always returned 0 — the count fell
+	// out of sync with the chunks still held in the builder's buffer.
 	n := p.builder.Pending()
+	_ = p.builder.FlushPending()
 	p.closed = true
 	return n
 }
